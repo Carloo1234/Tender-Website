@@ -3,7 +3,7 @@ import { defineConfig } from "@neon/config/v1";
 export default defineConfig({
   // Declare your Neon services here
   auth: true,
-  // Branch policy: per-branch tuning
+  // Branch policy: per-branch tunnpm install @neon/configing
   branch: (branch) => {
     if (branch.isDefault) {
       // Default branch: no overrides, uses project defaults
