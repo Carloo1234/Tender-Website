@@ -13,4 +13,8 @@ export const auth = betterAuth({
     provider: "pg",
     schema: { user, session, account, verification },
   }),
+  advanced: {
+    // Disable strict CSRF origin check only in non-production environments
+    disableOriginCheck: process.env.NODE_ENV !== "production"
+  }
 });
