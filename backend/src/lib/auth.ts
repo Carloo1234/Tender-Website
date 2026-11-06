@@ -1,8 +1,10 @@
 import { betterAuth } from "better-auth";
+import { admin, organization as organizationPlugin } from "better-auth/plugins"
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db.js";
-import { user, session, account, verification } from "../db/schema/auth-schema.js";
+import { user, session, account, verification, organization, member, invitation, organizationRole } from "../db/schema/auth-schema.js";
 import { env } from 'process';
+import { v7 as uuidv7 } from "uuid";
 
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET!,
@@ -11,10 +13,16 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: true },
   database: drizzleAdapter(db, {
     provider: "pg",
-    schema: { user, session, account, verification },
+    schema: { user, session, account, verification, organization, member, invitation, organizationRole },
   }),
   advanced: {
+    database: {
+      // Provide a custom function to enforce UUID v7 across all tables
+      // generateId: "uuid",
+      generateId: () => uuidv7(),
+    },
     // Disable strict CSRF origin check only in non-production environments
     disableOriginCheck: process.env.NODE_ENV !== "production"
-  }
+  },
+  plugins: [admin(), organizationPlugin()]
 });

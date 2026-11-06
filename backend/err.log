@@ -1,0 +1,72 @@
+[Deprecation] disableOriginCheck: true currently also disables CSRF checks. In a future version, disableOriginCheck will ONLY disable URL validation. To keep CSRF disabled, add disableCSRFCheck: true to your config.
+(node:26400) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2m2026-11-06T17:54:57.531Z[0m [31mERROR[0m [1m[Better Auth]:[0m Error DrizzleQueryError: Failed query: select "id", "name", "email", "email_verified", "image", "created_at", "updated_at", "role", "banned", "ban_reason", "ban_expires" from "user" where "user"."email" = $1
+params: test@mail.com
+    at NodePgPreparedQuery.queryWithCache (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/pg-core/session.js:41:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/node-postgres/session.js:117:22
+    ... 4 lines matching cause stack trace ...
+    at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/context/transaction.mjs:77:13
+    at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/api/index.mjs:56:11
+    at async internalHandler (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/better-call/dist/endpoint.mjs:29:20) {
+  query: 'select "id", "name", "email", "email_verified", "image", "created_at", "updated_at", "role", "banned", "ban_reason", "ban_expires" from "user" where "user"."email" = $1',
+  params: [ 'test@mail.com' ],
+  cause: Error: Connection terminated due to connection timeout
+      at C:\Users\Carlo\Coding Projects\TenderWebsite\backend\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/node-postgres/session.js:124:18
+      at async NodePgPreparedQuery.queryWithCache (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/pg-core/session.js:39:16)
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/node-postgres/session.js:117:22
+      at async Object.findOne (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/drizzle-adapter/dist/index.mjs:358:17)
+      at async Object.findOne (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/db/adapter/factory.mjs:578:16)
+      at async Object.findUserByEmail (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/better-auth/dist/db/internal-adapter.mjs:584:19)
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/better-auth/dist/api/routes/sign-up.mjs:192:18
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/context/transaction.mjs:77:13 {
+    [cause]: Error: Connection terminated unexpectedly
+        at Connection.<anonymous> (C:\Users\Carlo\Coding Projects\TenderWebsite\backend\node_modules\pg\lib\client.js:204:73)
+        at Connection.wrapper (node:events:639:12)
+        at Connection.emit (node:events:514:28)
+        at Socket.<anonymous> (C:\Users\Carlo\Coding Projects\TenderWebsite\backend\node_modules\pg\lib\connection.js:64:12)
+        at Socket.emit (node:events:526:24)
+        at TCP.<anonymous> (node:net:362:12)
+  }
+}
+# SERVER_ERROR:  DrizzleQueryError: Failed query: select "id", "name", "email", "email_verified", "image", "created_at", "updated_at", "role", "banned", "ban_reason", "ban_expires" from "user" where "user"."email" = $1
+params: test@mail.com
+    at NodePgPreparedQuery.queryWithCache (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/pg-core/session.js:41:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/node-postgres/session.js:117:22
+    ... 4 lines matching cause stack trace ...
+    at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/context/transaction.mjs:77:13
+    at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/api/index.mjs:56:11
+    at async internalHandler (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/better-call/dist/endpoint.mjs:29:20) {
+  query: 'select "id", "name", "email", "email_verified", "image", "created_at", "updated_at", "role", "banned", "ban_reason", "ban_expires" from "user" where "user"."email" = $1',
+  params: [ 'test@mail.com' ],
+  cause: Error: Connection terminated due to connection timeout
+      at C:\Users\Carlo\Coding Projects\TenderWebsite\backend\node_modules\pg-pool\index.js:45:11
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/node-postgres/session.js:124:18
+      at async NodePgPreparedQuery.queryWithCache (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/pg-core/session.js:39:16)
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/drizzle-orm/node-postgres/session.js:117:22
+      at async Object.findOne (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/drizzle-adapter/dist/index.mjs:358:17)
+      at async Object.findOne (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/db/adapter/factory.mjs:578:16)
+      at async Object.findUserByEmail (file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/better-auth/dist/db/internal-adapter.mjs:584:19)
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/better-auth/dist/api/routes/sign-up.mjs:192:18
+      at async file:///C:/Users/Carlo/Coding%20Projects/TenderWebsite/backend/node_modules/@better-auth/core/dist/context/transaction.mjs:77:13 {
+    [cause]: Error: Connection terminated unexpectedly
+        at Connection.<anonymous> (C:\Users\Carlo\Coding Projects\TenderWebsite\backend\node_modules\pg\lib\client.js:204:73)
+        at Connection.wrapper (node:events:639:12)
+        at Connection.emit (node:events:514:28)
+        at Socket.<anonymous> (C:\Users\Carlo\Coding Projects\TenderWebsite\backend\node_modules\pg\lib\connection.js:64:12)
+        at Socket.emit (node:events:526:24)
+        at TCP.<anonymous> (node:net:362:12)
+  }
+}
