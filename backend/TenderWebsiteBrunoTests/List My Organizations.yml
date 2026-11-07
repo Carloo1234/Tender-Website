@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: http://localhost:3000/api/auth/organization/list
+  url: http://localhost:3000/api/auth/organization/list?organizationId=
+  params:
+    - name: organizationId
+      value: ""
+      type: query
   auth: inherit
 
 settings:

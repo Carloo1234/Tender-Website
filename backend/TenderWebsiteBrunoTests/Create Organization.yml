@@ -1,0 +1,25 @@
+info:
+  name: Create Organization
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: http://localhost:3000/api/auth/organization/create
+  body:
+    type: json
+    data: |-
+      {
+              "name": "My Organization", // required, The organization name.
+              "slug": "my-org", // required, The organization slug.
+              "logo": "https://example.com/logo.png",
+              "keepCurrentActiveOrganization": false // Whether to keep the current active organization active after creating a new one.
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

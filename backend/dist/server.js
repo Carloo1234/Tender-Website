@@ -5,6 +5,7 @@ import { auth } from './lib/auth.js';
 import helmet from 'helmet';
 import cors from 'cors';
 import { authMiddleware } from './middleware/authenticate.js';
+import projectsRouter from "./modules/projects/projects.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 // Mount Better Auth handler directly
@@ -28,6 +29,7 @@ app.get('/health', async (_req, res) => {
         database: dbOk ? 'connected' : 'disconnected'
     });
 });
+app.use("/projects", projectsRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

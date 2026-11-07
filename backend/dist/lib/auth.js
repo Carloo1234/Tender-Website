@@ -5,6 +5,7 @@ import { db } from "../db/db.js";
 import { user, session, account, verification, organization, member, invitation, organizationRole } from "../db/schema/auth-schema.js";
 import { env } from 'process';
 import { v7 as uuidv7 } from "uuid";
+import { ac, admin_role, custom_role, owner_role } from "./permissions.js";
 export const auth = betterAuth({
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.BETTER_AUTH_URL || "http://localhost:3000",
@@ -23,5 +24,10 @@ export const auth = betterAuth({
         // Disable strict CSRF origin check only in non-production environments
         disableOriginCheck: process.env.NODE_ENV !== "production"
     },
-    plugins: [admin(), organizationPlugin()]
+    plugins: [admin(), organizationPlugin({
+            ac, // Must be defined in order for dynamic access control to work
+            dynamicAccessControl: {
+                enabled: true,
+            }
+        })]
 });

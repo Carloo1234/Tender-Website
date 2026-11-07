@@ -1,0 +1,21 @@
+info:
+  name: List Organization Roles
+  type: http
+  seq: 10
+
+http:
+  method: GET
+  url: http://localhost:3000/api/auth/organization/list-roles
+  params:
+    - name: organizationId
+      value: 01a1b69e-8a01-73d3-8d72-43f012522c3d
+      type: query
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
